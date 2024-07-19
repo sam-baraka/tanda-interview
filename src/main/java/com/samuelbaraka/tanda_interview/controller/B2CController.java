@@ -6,6 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import javax.validation.Valid;
+import javax.validation.ConstraintViolationException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
+
 
 @RestController
 @RequestMapping("/api/b2c")
@@ -15,7 +19,8 @@ public class B2CController {
     private B2CService b2cService;
 
     @PostMapping
-    public ResponseEntity<?> createB2CRequest(@RequestBody B2CRequest request) {
+    public ResponseEntity<?> createB2CRequest(@Valid @RequestBody B2CRequest request) {
+
         try {
             B2CRequest createdRequest = b2cService.createB2CRequest(request);
             return ResponseEntity.status(HttpStatus.CREATED).body(createdRequest);
